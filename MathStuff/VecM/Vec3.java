@@ -1,5 +1,7 @@
 package MathStuff.VecM;
 
+import MathStuff.MatMxM.*;
+
 public class Vec3 {
 
     public float x;
@@ -48,6 +50,20 @@ public class Vec3 {
         this.z*=value;
         return this;
     }
+
+    public Vec3 mul(Mat3 B) {
+        Vec3 Buff= this;
+        this.x=B.m00*Buff.x+B.m01*Buff.y+B.m02*Buff.z;
+        this.y=B.m10*Buff.x+B.m11*Buff.y+B.m12*Buff.z;
+        this.z=B.m20*Buff.x+B.m21*Buff.y+B.m22*Buff.z;
+        return this;
+    }
+
+    public Vec3 mul(MatN B) {
+        
+        return this;
+    }
+
 
     public float length() {
         return (float) Math.sqrt(Math.pow(this.x, 2)+Math.pow(this.y, 2)+Math.pow(this.z, 2));
