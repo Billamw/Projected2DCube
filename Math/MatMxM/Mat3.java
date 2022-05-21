@@ -35,17 +35,36 @@ public class Mat3 {
         this.m20 = arr[2][0]; this.m21 = arr[2][1]; this.m22 = arr[2][2];
     }
 
+    public static Mat3 rotationX(double alpha) {
+        double a = alpha;
+        return new Mat3(1,     0,            0,
+                        0,(float)Math.cos(a), (float)-Math.sin(a),
+                        0,(float)Math.sin(a), (float) Math.cos(a));
+    }
+
+    public static Mat3 rotationY(double alpha) {
+        double a = alpha;
+        return new Mat3((float) Math.cos(a), 0, (float)Math.sin(a), 
+                              0,         1,     0,
+                        (float)-Math.sin(a), 0, (float)Math.cos(a));
+    }
+
+    public static Mat3 rotationZ(double alpha) {
+        double a = alpha;
+        return new Mat3((float)Math.cos(a), (float)-Math.sin(a), 0,
+                        (float)Math.sin(a), (float) Math.cos(a), 0,
+                              0,               0,       1);
+    }
+
+    public static Mat3 rotation(double alpha, double beta, double gamma) {
+        double a = alpha, b = beta, y = gamma;
+        return new Mat3((float)(Math.cos(b)*Math.cos(y)), (float)(Math.sin(a)*Math.sin(b)*Math.cos(y)-Math.cos(a)*Math.sin(y)), (float)(Math.cos(a)*Math.sin(b)*Math.cos(y)+Math.sin(a)*Math.sin(y)),
+                        (float)(Math.cos(b)*Math.cos(y)), (float)(Math.sin(a)*Math.sin(b)*Math.cos(y)+Math.cos(a)*Math.sin(y)), (float)(Math.cos(a)*Math.sin(b)*Math.cos(y)-Math.sin(a)*Math.sin(y)),
+                             (float)-Math.sin(b),                     (float)(Math.sin(a)*Math.cos(b)),                                     (float)(Math.cos(a)*Math.cos(b))                       );
+    }
 
 
-    // public static Mat3 rotationZ(double alpha) {
-    //     double a = alpha;
-    //     return new Mat3((float)Math.cos(a), (float)-Math.sin(a), 0,
-    //                     (float)Math.sin(a), (float)Math.cos(a) , 0,
-    //                           0,               0,       1);
-    // }
-
-
-
+    
     public void clone(Mat3 M) {
         this.m00= M.m00; this.m01= M.m01; this.m02=M.m02;
         this.m10= M.m10; this.m11= M.m11; this.m12=M.m12;
