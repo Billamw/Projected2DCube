@@ -140,52 +140,5 @@ public class MatN {
         }
         System.out.println();
     }
-    public static void main(String[] args) {
-        //1, 2, 1, 1, 1, 3, 1, 4, 2)
-        //(2f, 0f, -1f, -0.2f, -0.2f, 0.4f, -0.6f, 0.4f, 0.2f);
-        float[][] efill = new float[3][3];
-        efill[0][0]=1;     efill[0][1]=2;     efill[0][2]=1;
-        efill[1][0]=1;     efill[1][1]=1;     efill[1][2]=3;
-        efill[2][0]=1;     efill[2][1]=4;     efill[2][2]=2;
-
-        float[][] testFill = {
-            {1, 2, 1},
-            {1, 3, 1},
-            {1, 4, 2}
-        };
-        testFill.clone();
-        
-        float[][] zfill = new float[3][3];
-        zfill[0][0]=2;     zfill[0][1]=0;     zfill[0][2]=-1;
-        zfill[1][0]=-0.2f; zfill[1][1]=-0.2f; zfill[1][2]=0.4f;
-        zfill[2][0]=-0.6f; zfill[2][1]=0.4f;  zfill[2][2]=0.2f;
-
-        float[][] unitfill = new float[3][3];
-        unitfill[0][0]=1;     unitfill[0][1]=0;     unitfill[0][2]=0;
-        unitfill[1][0]=0;     unitfill[1][1]=1;     unitfill[1][2]=0;
-        unitfill[2][0]=0;     unitfill[2][1]=0;     unitfill[2][2]=1;
-        
-        MatN erste = new MatN(3, 3);
-        MatN zweite = new MatN(3, 3);
-
-
-        erste.fill(efill); zweite.fill(zfill);
-        //erste.show();
-        //zweite.show();
-        //erste.mul(zweite).round(2).show();
-
-        //plusMinus.determinante();
-
-        float[][] detFill = new float[4][4];
-        detFill[0][0]=  3; detFill[0][1]= 1; detFill[0][2]=  5; detFill[0][3]=  1;
-        detFill[1][0]= -1; detFill[1][1]= 0; detFill[1][2]= -2; detFill[1][3]=  0;
-        detFill[2][0]=  0; detFill[2][1]= 0; detFill[2][2]=  1; detFill[2][3]= -1;
-        detFill[3][0]=  4; detFill[3][1]= 0; detFill[3][2]=  4; detFill[3][3]=  1;
-
-        MatN detTry = new MatN(detFill);
-        detTry.show();
-        float det = detTry.determinante();
-        System.out.println(det);
-        
-    }
+   
 }
