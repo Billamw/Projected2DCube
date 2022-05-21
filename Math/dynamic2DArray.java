@@ -1,5 +1,4 @@
 package MathStuff;
-
 public class dynamic2DArray {
 
     public float[][] arr;
