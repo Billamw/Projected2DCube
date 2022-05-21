@@ -1,4 +1,4 @@
-package MathStuff.VecM;
+package Math.VecM;
 
 public class VecN {
 

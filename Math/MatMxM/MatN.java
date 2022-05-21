@@ -1,6 +1,6 @@
-package MathStuff.MatMxM;
+package Math.MatMxM;
 
-import MathStuff.dynamic2DArray;
+import Math.dynamic2DArray;
 
 public class MatN {
 
