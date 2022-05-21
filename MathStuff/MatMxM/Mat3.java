@@ -1,6 +1,6 @@
-package Math.MatMxM;
+package MathStuff.MatMxM;
 
-import Math.VecM.Vec3;
+import MathStuff.VecM.Vec3;
 
 public class Mat3 {
 

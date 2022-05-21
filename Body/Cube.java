@@ -1,7 +1,7 @@
 
 
-import Math.MatMxM.*;
-import Math.VecM.*;
+import MathStuff.MatMxM.*;
+import MathStuff.VecM.*;
 
 public class Cube {
 
