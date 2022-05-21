@@ -5,8 +5,6 @@ import MathStuff.dynamic2DArray;
 public class MatN {
 
     public float[][] M;
-    // public int row = M.length;
-    // public int column = M[0].length;
 
     public MatN () {}
     public MatN (int row, int column) {
@@ -23,6 +21,7 @@ public class MatN {
         int column = this.M[0].length;
         String size = row + "x" + column;
         return size;
+        
     }
 
     public MatN clone(MatN M) {
