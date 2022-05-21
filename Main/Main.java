@@ -11,10 +11,14 @@ public class Main {
         float[][] fill = { {1,0,0},
                            {0,1,0} };
         orthProject.fill(fill);
-        cube1.a.mul(Mat3.rotationX(5));
+
+        float alpha = 5f;
+
+       //cube1.a.mul(Mat3.rotationX(5));
+
+
         for (int i = 0; i < cube1.toArray().length; i++) {
-            cube1.toArray()[0].mul(5);
-            
+            cube1.toArray()[i].mul(Mat3.rotationX(alpha));  
         }
 
     }
