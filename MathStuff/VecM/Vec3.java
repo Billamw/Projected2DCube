@@ -59,9 +59,17 @@ public class Vec3 {
         return this;
     }
 
-    public Vec3 mul(MatN B) {
-        
-        return this;
+    /**
+     * Multyply a Vec3 wit a 2x3 Matrix
+     * @param B
+     * @return Vec2
+     */
+    public Vec2 mul(MatN B) {
+        if(B.hasCollumns() != 3) throw new Error("Error lol");
+        Vec2 Buff = new Vec2();
+        Buff.x = B.M[0][0]*this.x+B.M[0][1]*this.y+B.M[0][2]*this.z;
+        Buff.y = B.M[1][0]*this.x+B.M[1][1]*this.y+B.M[1][2]*this.z;
+        return Buff;
     }
 
 
