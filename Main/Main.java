@@ -20,7 +20,9 @@ public class Main {
         for (int i = 0; i < cube1.toArray().length; i++) {
             cube1.toArray()[i].mul(Mat3.rotationX(alpha));  
         }
-
+        for (int i = 0; i < cube1.toArray().length; i++) {
+            cube1.toArray()[i].showHor();  
+        }
     }
 
 }
