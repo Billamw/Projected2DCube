@@ -5,10 +5,6 @@ import MathStuff.VecM.*;
 
 public class Cube {
 
-    public static void main(String[] args) {
-        
-    }
-
     public Vec3 a,b,c,d,e,f,g,h;
     public Vec3 pos;
     public int size;
@@ -36,4 +32,8 @@ public class Cube {
         this.h.add(pos);
     }
 
+    public Vec3[] toArray() {
+        Vec3[] r = {a,b,c,d,e,f,g,h};
+        return r;
+    }
 }
