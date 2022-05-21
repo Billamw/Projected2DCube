@@ -62,5 +62,40 @@ public class Mat4 {
         this.m30 *= val; this.m31 *= val; this.m32 *= val; this.m33 *= val;
         return this;
     }
+
+    public void clone(Mat4 M) {
+        this.m00 = M.m00; this.m01 = M.m01; this.m02 = M.m02; this.m03 = M.m03;
+        this.m10 = M.m10; this.m11 = M.m11; this.m12 = M.m12; this.m13 = M.m13;
+        this.m20 = M.m20; this.m21 = M.m21; this.m22 = M.m22; this.m23 = M.m23;
+        this.m30 = M.m30; this.m31 = M.m31; this.m32 = M.m32; this.m33 = M.m33;
+    }
+
+    private static Mat4 Mbuffer = new Mat4();
+    
+    public Mat4 mul(Mat4 B) { 
+        Mbuffer.clone(this);
+        Mat4 M = Mbuffer;
+        this.m00= M.m00*B.m00 + M.m01*B.m10 + M.m02*B.m20 + M.m03*B.m30;
+        this.m01= M.m00*B.m01 + M.m01*B.m11 + M.m02*B.m21 + M.m03*B.m31;
+        this.m02= M.m00*B.m02 + M.m01*B.m12 + M.m02*B.m22 + M.m03*B.m32;
+        this.m03= M.m00*B.m03 + M.m01*B.m13 + M.m02*B.m23 + M.m03*B.m33;
+        
+        this.m10= M.m10*B.m00 + M.m11*B.m10 + M.m12*B.m20 + M.m13*B.m30;
+        this.m11= M.m10*B.m01 + M.m11*B.m11 + M.m12*B.m21 + M.m13*B.m31;
+        this.m12= M.m10*B.m02 + M.m11*B.m12 + M.m12*B.m22 + M.m13*B.m32;
+        this.m13= M.m10*B.m03 + M.m11*B.m13 + M.m12*B.m23 + M.m13*B.m33;
+        
+        this.m20= M.m20*B.m00 + M.m21*B.m10 + M.m22*B.m20 + M.m23*B.m30;
+        this.m21= M.m20*B.m01 + M.m21*B.m11 + M.m22*B.m21 + M.m23*B.m31;
+        this.m22= M.m20*B.m02 + M.m21*B.m12 + M.m22*B.m22 + M.m23*B.m32;
+        this.m23= M.m20*B.m03 + M.m21*B.m13 + M.m22*B.m23 + M.m23*B.m33;
+        
+        this.m30= M.m30*B.m00 + M.m31*B.m10 + M.m32*B.m20 + M.m33*B.m30;
+        this.m31= M.m30*B.m01 + M.m31*B.m11 + M.m32*B.m21 + M.m33*B.m31;
+        this.m32= M.m30*B.m02 + M.m31*B.m12 + M.m32*B.m22 + M.m33*B.m32;
+        this.m33= M.m30*B.m03 + M.m31*B.m13 + M.m32*B.m23 + M.m33*B.m33;
+
+        return this;
+    }
     
 }

@@ -14,13 +14,14 @@ public class Main {
                            {0,1,0} };
         MatN orthProject = new MatN(fill);
         
-
-        float alpha = 5f;
         
+
         Mat4 T = new Mat4(1,0,0,pos.x,
                           0,1,0,pos.y,
                           0,0,1,pos.z,
                           0,0,0,1);
+        float alpha = 5f;
+
 
         Mat3 r = Mat3.rotation(alpha, alpha, alpha);
 
