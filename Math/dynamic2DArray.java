@@ -1,4 +1,4 @@
-package Math;
+package MathStuff;
 
 public class dynamic2DArray {
 
