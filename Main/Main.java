@@ -7,10 +7,10 @@ public class Main {
     public static void main(String[] args) {
         
         Cube cube1 = new Cube(new Vec3(40,40,40), 50);
-        MatN orthProject = new MatN(2,3);
         float[][] fill = { {1,0,0},
                            {0,1,0} };
-        orthProject.fill(fill);
+        MatN orthProject = new MatN(fill);
+        
 
         float alpha = 5f;
 

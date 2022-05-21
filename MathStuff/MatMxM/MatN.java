@@ -5,8 +5,8 @@ import MathStuff.dynamic2DArray;
 public class MatN {
 
     public float[][] M;
-    public int row = M.length;
-    public int column = M[0].length;
+    // public int row = M.length;
+    // public int column = M[0].length;
 
     public MatN () {}
     public MatN (int row, int column) {
@@ -41,6 +41,22 @@ public class MatN {
             }
         }
         return this;
+    }
+
+        //private static MatN Mbuffer = new MatN();
+    /**
+     * 
+     * @return row
+     */
+    public int hasRows() {
+        return this.M.length;
+    }
+    /**
+     * 
+     * @return Collumn
+     */
+    public int hasCollumns() {
+        return this.M[0].length;
     }
 
     public MatN round(int places) {
