@@ -7,7 +7,7 @@ import Main.Draw;
 public class Main {
     public static void main(String[] args) {
 
-        Vec3 pos = new Vec3(80,80,80);
+        Vec3 pos = new Vec3(200,80,80);
         
         Cube cube1 = new Cube(pos, 50);
         float[][] fill = { {1,0,0},
@@ -20,7 +20,7 @@ public class Main {
                           0,1,0,pos.y,
                           0,0,1,pos.z,
                           0,0,0,1);
-        float alpha = 5f;
+        float alpha = (float)Math.toRadians(1);
 
 
         Mat3 r = Mat3.rotation(alpha, alpha, alpha);
@@ -36,19 +36,22 @@ public class Main {
                              0,0,0,1);
 
         R.mul(TMin);
-
-
-        for (int i = 0; i < cube1.toArray().length; i++) {
-            cube1.toArray()[i].mul(Mat3.rotationX(alpha));    
-           // cube1.toArray()[i].mul(Mat3.rotationZ(alpha));
-        }
-        Draw.setBackgroundColor(0, 0, 0);
+        Draw.setBackgroundColor(50, 50, 50);
         Draw.init(500,500);
+        Draw.setFps(30);
+        //Draw.enableDoubleBuffering(true);
+        Draw.setColor(255, 255, 255);  
+        while (true){
 
-        Draw.setColor(255, 255, 255);    
-        for (int i = 0; i < cube1.toArray().length; i++) {
-            cube1.toArray()[i].showHor();  
-            Draw.filledEllipse(cube1.toArray()[i].mul(orthProject), 5, 5);
+            if(Draw.waitForKeyboard() == 0x20){Draw.clearScreen();
+            
+            for (int i = 0; i < cube1.toArray().length; i++) {
+                //cube1.toArray()[i].showHor();  
+                cube1.toArray()[i].mul(Mat3.rotationX(alpha));
+                Draw.filledEllipse(cube1.toArray()[i].mul(orthProject), 5, 5);
+            }
+            alpha += Math.toRadians(5);
+            Draw.syncToFrameRate();}
         }
     }
 
