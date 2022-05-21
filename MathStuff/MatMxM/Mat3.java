@@ -57,10 +57,9 @@ public class Mat3 {
     }
 
     public static Mat3 rotation(double alpha, double beta, double gamma) {
-        double a = alpha, b = beta, y = gamma;
-        return new Mat3((float)(Math.cos(b)*Math.cos(y)), (float)(Math.sin(a)*Math.sin(b)*Math.cos(y)-Math.cos(a)*Math.sin(y)), (float)(Math.cos(a)*Math.sin(b)*Math.cos(y)+Math.sin(a)*Math.sin(y)),
-                        (float)(Math.cos(b)*Math.cos(y)), (float)(Math.sin(a)*Math.sin(b)*Math.cos(y)+Math.cos(a)*Math.sin(y)), (float)(Math.cos(a)*Math.sin(b)*Math.cos(y)-Math.sin(a)*Math.sin(y)),
-                             (float)-Math.sin(b),                     (float)(Math.sin(a)*Math.cos(b)),                                     (float)(Math.cos(a)*Math.cos(b))                       );
+        return new Mat3((float)(Math.cos(beta)*Math.cos(gamma)), (float)(Math.sin(alpha)*Math.sin(beta)*Math.cos(gamma)-Math.cos(alpha)*Math.sin(gamma)), (float)(Math.cos(alpha)*Math.sin(beta)*Math.cos(gamma)+Math.sin(alpha)*Math.sin(gamma)),
+                        (float)(Math.cos(beta)*Math.cos(gamma)), (float)(Math.sin(alpha)*Math.sin(beta)*Math.cos(gamma)+Math.cos(alpha)*Math.sin(gamma)), (float)(Math.cos(alpha)*Math.sin(beta)*Math.cos(gamma)-Math.sin(alpha)*Math.sin(gamma)),
+                             (float)-Math.sin(beta),                     (float)(Math.sin(alpha)*Math.cos(beta)),                                     (float)(Math.cos(alpha)*Math.cos(beta))                       );
     }
 
 

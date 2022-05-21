@@ -16,6 +16,12 @@ public class Vec3 {
         this.z = z;
     }
 
+    public Vec3(Vec2 H) {
+        this.x = H.x;
+        this.y = H.y;
+        this.z =  1 ;
+    }
+
     public void set(float x, float y, float z){
         this.x = x; this.y = y; this.z = z;
     }
@@ -64,9 +70,10 @@ public class Vec3 {
      * @param B
      * @return Vec2
      */
+
+    Vec2 Buff = new Vec2();
     public Vec2 mul(MatN B) {
         if(B.hasCollumns() != 3) throw new Error("Error lol");
-        Vec2 Buff = new Vec2();
         Buff.x = B.M[0][0]*this.x+B.M[0][1]*this.y+B.M[0][2]*this.z;
         Buff.y = B.M[1][0]*this.x+B.M[1][1]*this.y+B.M[1][2]*this.z;
         return Buff;

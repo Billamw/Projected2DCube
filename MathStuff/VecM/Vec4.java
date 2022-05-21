@@ -17,6 +17,13 @@ public class Vec4 {
         this.w = w;
     }
 
+    public Vec4(Vec3 H) {
+        this.x = H.x;
+        this.y = H.y;
+        this.z = H.z;
+        this.w =  1 ;
+    }
+
     public Vec4(float[] arr) {
         this.x = arr[0];
         this.y = arr[1];

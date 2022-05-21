@@ -39,6 +39,13 @@ public class Mat4 {
         this.m30 = arr[12]; this.m01 = arr[13]; this.m02 = arr[14]; this.m03 = arr[15];
     }
 
+    public Mat4(Mat3 B) {
+        this.m00 = B.m00; this.m01 = B.m01; this.m02 = B.m02; this.m03 =   0  ;
+        this.m10 = B.m10; this.m11 = B.m11; this.m12 = B.m12; this.m13 =   0  ;
+        this.m20 = B.m20; this.m21 = B.m21; this.m22 = B.m22; this.m23 =   0  ;
+        this.m30 =   0  ; this.m31 =   0  ; this.m32 =   0  ; this.m33 =   1  ;
+    }
+
     public Mat4 add(Mat4 B) {
         this.m00 += B.m00; this.m01 += B.m01; this.m02 += B.m02; this.m03 += B.m03;
         this.m10 += B.m10; this.m11 += B.m11; this.m12 += B.m12; this.m13 += B.m13;
