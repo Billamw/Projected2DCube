@@ -3,6 +3,7 @@ package Main;
 import Body.Cube;
 import MathStuff.MatMxM.*;
 import MathStuff.VecM.*;
+import Main.Draw;
 public class Main {
     public static void main(String[] args) {
         
@@ -13,6 +14,7 @@ public class Main {
         
 
         float alpha = 5f;
+        
 
        //cube1.a.mul(Mat3.rotationX(5));
 

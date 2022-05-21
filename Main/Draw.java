@@ -35,6 +35,8 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import javax.swing.*;
 
+import MathStuff.VecM.Vec2;
+
 /*
  * Draw version 0.3 
  */
@@ -426,6 +428,11 @@ public class Draw {
         g.fillOval(x, y, width, height);
         if(!useDoubleBuffering) drawingCanvas.repaint();
     }
+    public static void filledEllipse(Vec2 a, int width, int height) {
+        Graphics g = drawingCanvas.getFronfBufferGraphics();
+        g.fillOval((int)a.x, (int)a.y, width, height);
+        if(!useDoubleBuffering) drawingCanvas.repaint();
+    }
     
     public static void ellipse(int x, int y, int width, int height) {
         Graphics g = drawingCanvas.getFronfBufferGraphics();
@@ -467,6 +474,11 @@ public class Draw {
     public static void line(int x1, int y1, int x2, int y2) {
         Graphics g = drawingCanvas.getFronfBufferGraphics();
         g.drawLine(x1, y1, x2, y2);
+        if(!useDoubleBuffering) drawingCanvas.repaint();
+    }
+    public static void line(Vec2 a, Vec2 b) {
+        Graphics g = drawingCanvas.getFronfBufferGraphics();
+        g.drawLine((int)a.x, (int)a.y, (int)b.x, (int)b.y);
         if(!useDoubleBuffering) drawingCanvas.repaint();
     }
         
