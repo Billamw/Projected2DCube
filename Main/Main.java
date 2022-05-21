@@ -12,9 +12,8 @@ public class Main {
                            {0,1,0} };
         MatN orthProject = new MatN(fill);
         
-
-        float alpha = 5f;
         
+        float alpha = 5f;
 
        //cube1.a.mul(Mat3.rotationX(5));
 
