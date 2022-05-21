@@ -5,8 +5,8 @@ import MathStuff.dynamic2DArray;
 public class MatN {
 
     public float[][] M;
-    //public int row = M.length;
-    //public int column = M[0].length;
+    public int row = M.length;
+    public int column = M[0].length;
 
     public MatN () {}
     public MatN (int row, int column) {
