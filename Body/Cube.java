@@ -1,4 +1,3 @@
-package Body;
 
 import MathStuff.MatMxM.*;
 import MathStuff.VecM.*;
@@ -30,5 +29,10 @@ public class Cube {
         this.g.add(pos);
         this.h = new Vec3(-half,-half,-half);
         this.h.add(pos);
+    }
+
+    public Vec3[] toArray() {
+        Vec3[] r = {a,b,c,d,e,f,g,h};
+        return r;
     }
 }
