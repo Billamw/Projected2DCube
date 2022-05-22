@@ -16,10 +16,7 @@ public class Main {
         
         
 
-        Mat4 T = new Mat4(1,0,0,pos.x,
-                          0,1,0,pos.y,
-                          0,0,1,pos.z,
-                          0,0,0,1);
+        Mat4 T = Mat4.moveMatrix(cube1.pos);
         float alpha = (float)Math.toRadians(45);
 
         
@@ -30,10 +27,6 @@ public class Main {
                           r.m20, r.m21, r.m22, 0, 
                           0, 0, 0, 1);
 
-        Mat4 TMin = new Mat4(1,0,0,-pos.x,
-                             0,1,0,-pos.y,
-                             0,0,1,-pos.z,
-                             0,0,0,1);
 
         T.mul(R);
         Draw.setBackgroundColor(50, 50, 50);
