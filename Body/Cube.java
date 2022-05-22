@@ -14,21 +14,32 @@ public class Cube {
         this.size = size;
 
         this.a = new Vec3(-1,1,1);
-        this.a.add(pos);
+        //this.a.add(pos);
         this.b = new Vec3(1,1,1);
-        this.b.add(pos);
+        //this.b.add(pos);
         this.c = new Vec3(1,1,-1);
-        this.c.add(pos);
+        //this.c.add(pos);
         this.d = new Vec3(-1,1,-1);
-        this.d.add(pos);
+        //this.d.add(pos);
         this.e = new Vec3(-1,-1,1);
-        this.e.add(pos);
+        //this.e.add(pos);
         this.f = new Vec3(1,-1,1);
-        this.f.add(pos);
+        //this.f.add(pos);
         this.g = new Vec3(1,-1,-1);
-        this.g.add(pos);
+        //this.g.add(pos);
         this.h = new Vec3(-1,-1,-1);
-        this.h.add(pos);
+        //this.h.add(pos);
+    }
+
+    public void scale(int size) {
+        this.a.mul(size);
+        this.b.mul(size);
+        this.c.mul(size);
+        this.d.mul(size);
+        this.e.mul(size);
+        this.f.mul(size);
+        this.g.mul(size);
+        this.h.mul(size);
     }
 
     public Vec3[] toArray() {
