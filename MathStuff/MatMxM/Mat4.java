@@ -1,5 +1,6 @@
 package MathStuff.MatMxM;
 
+import MathStuff.VecM.Vec3;
 import MathStuff.VecM.Vec4;
 
 public class Mat4 {
@@ -44,6 +45,18 @@ public class Mat4 {
         this.m10 = B.m10; this.m11 = B.m11; this.m12 = B.m12; this.m13 =   0  ;
         this.m20 = B.m20; this.m21 = B.m21; this.m22 = B.m22; this.m23 =   0  ;
         this.m30 =   0  ; this.m31 =   0  ; this.m32 =   0  ; this.m33 =   1  ;
+    }
+    /**
+     * moves Vecor to Vector t
+     * Caution! diagonals = 1;
+     * @param t
+     * @return
+     */
+    public static Mat4 moveMatrix(Vec3 t) {
+        return new Mat4(1,0,0, t.x, 
+                        0,1,0, t.y,
+                        0,0,1, t.z,
+                        0,0,0,1);
     }
 
     public Mat4 add(Mat4 B) {

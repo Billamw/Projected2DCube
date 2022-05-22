@@ -37,6 +37,13 @@ public class Vec3 {
         return result;
     }
 
+    public Vec3 negative() {
+        this.x = -this.x;
+        this.y = -this.y;
+        this.z = -this.z;
+        return this;
+    }
+
     public Vec3 add (Vec3 vecRight) {
         this.x += vecRight.x;
         this.y += vecRight.y;
