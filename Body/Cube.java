@@ -7,11 +7,11 @@ public class Cube {
 
     public Vec3 a,b,c,d,e,f,g,h;
     public Vec3 pos;
-    public int size;
+    public int size = 1;
 
     public Cube(Vec3 pos, int size) {
         this.pos = pos;
-        this.size = size;
+
 
         this.a = new Vec3(-1,1,1);
         //this.a.add(pos);
@@ -32,6 +32,8 @@ public class Cube {
     }
 
     public void scale(int size) {
+        if(this.size<1 || this.size>1) return;       
+        this.size = size;
         this.a.mul(size);
         this.b.mul(size);
         this.c.mul(size);
