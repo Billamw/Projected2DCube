@@ -16,6 +16,11 @@ public class Vec2 {
         this.y = y;
     }
 
+    public Vec2(Vec3 H) {
+        this.x = H.x;
+        this.y = H.y;
+    }
+
     public Vec2 add(Vec2 vRight) {
         this.x += vRight.x;
         this.y += vRight.y;

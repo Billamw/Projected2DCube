@@ -7,7 +7,7 @@ import Main.Draw;
 public class Main {
     public static void main(String[] args) {
 
-        Vec3 pos = new Vec3(250,250,0);
+        Vec3 pos = new Vec3(250,250,40);
         
         Cube cube1 = new Cube(pos, 50);
         float[][] fill = { {1,0,0},
@@ -15,42 +15,63 @@ public class Main {
         MatN orthProject = new MatN(fill);
         
         
-        float alpha = (float)Math.toRadians(45);
-        
-        Mat4 T = Mat4.moveMatrix(cube1.pos);
-        T.m00 = 0;
-        T.m11 = 0;
-        T.m22 = 0;
+        float alpha = (float)Math.toRadians(33);
         
         
-        Mat3 r = Mat3.rotationX(alpha);
+        Vec3[] test = new Vec3[8];
+        
 
-        Mat4 R = new Mat4(r.m00, r.m01, r.m02, 0, 
-                          r.m10, r.m11, r.m12, 0,
-                          r.m20, r.m21, r.m22, 0, 
-                          0, 0, 0, 1);
-                          
-                          
-        T.add(R);
         Draw.setBackgroundColor(50, 50, 50);
         Draw.init(500,500);
         Draw.setColor(255, 255, 255);  
+        Draw.setFps(30);
         
-        
+        //Draw.enableDoubleBuffering(true);
         while(true) {
-            cube1.scale(50);
+            Mat4 T = Mat4.moveMatrix(cube1.pos);
+            Mat3 r = Mat3.rotationX(alpha);
+            Mat3 y = Mat3.rotationY(alpha);
+            Mat3 z = Mat3.rotationZ(alpha);
             
-        for (int i = 0; i < cube1.toArray().length; i++) {
-            Vec4 buff = new Vec4(cube1.toArray()[i]);
-            buff.mul(T);
-            cube1.toArray()[i] = new Vec3(buff);
-            cube1.toArray()[i].add(cube1.pos);
-            Draw.filledEllipse(cube1.toArray()[i].mul(orthProject), 5, 5);
-            cube1.toArray()[i].showHor();  
-        }   
+            Mat4 X = new Mat4(r);
+            Mat4 Y = new Mat4(y);
+            Mat4 Z = new Mat4(z);
+            Y.mul(X);
+            //Z.mul(Y);
+            T.mul(Y);
+            //T.mul(X);
+            cube1.scale(50);
 
-        }
+            for (int i = 0; i < cube1.toArray().length; i++) {
+                Vec4 buff = new Vec4(cube1.toArray()[i]);
+                buff.mul(T);
+                //buff.showHor();
+                test[i] = new Vec3(buff);
+                // test[i].x/=test[i].z;
+                // test[i].y/=test[i].z;
+                Draw.filledEllipse(test[i].mul(orthProject), 5, 5);  
+            }   
+            Draw.line(new Vec2(test[0]),new Vec2(test[1]));
+            Draw.line(new Vec2(test[1]),new Vec2(test[2]));
+            Draw.line(new Vec2(test[2]),new Vec2(test[3]));
+            Draw.line(new Vec2(test[3]),new Vec2(test[0]));
+
+            Draw.line(new Vec2(test[4]),new Vec2(test[5]));
+            Draw.line(new Vec2(test[5]),new Vec2(test[6]));
+            Draw.line(new Vec2(test[6]),new Vec2(test[7]));
+            Draw.line(new Vec2(test[7]),new Vec2(test[4]));
+
+            Draw.line(new Vec2(test[0]),new Vec2(test[4]));
+            Draw.line(new Vec2(test[1]),new Vec2(test[5]));
+            Draw.line(new Vec2(test[2]),new Vec2(test[6]));
+            Draw.line(new Vec2(test[3]),new Vec2(test[7]));
+            alpha += Math.toRadians(5);
         
+        Draw.syncToFrameRate();
+        Draw.clearScreen();
+        
+    }
+    
 
     }
 
