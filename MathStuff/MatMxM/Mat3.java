@@ -139,17 +139,29 @@ public class Mat3 {
 
     public Mat3 cofactor() {
         M.clone(this);
-        this.m00 =  new Mat2(M.m11, M.m12, M.m21, M.m22).determinante();
-        this.m01 = -new Mat2(M.m10, M.m12, M.m20, M.m22).determinante();
-        this.m02 =  new Mat2(M.m10, M.m11, M.m20, M.m21).determinante();
+        // this.m00 =  new Mat2(M.m11, M.m12, M.m21, M.m22).determinante();
+        // this.m01 = -new Mat2(M.m10, M.m12, M.m20, M.m22).determinante();
+        // this.m02 =  new Mat2(M.m10, M.m11, M.m20, M.m21).determinante();
+        
+        // this.m10 = -new Mat2(M.m01, M.m02, M.m21, M.m22).determinante();
+        // this.m11 =  new Mat2(M.m00, M.m02, M.m20, M.m22).determinante();
+        // this.m12 = -new Mat2(M.m00, M.m01, M.m20, M.m21).determinante();
+        
+        // this.m20 =  new Mat2(M.m01, M.m02, M.m11, M.m12).determinante();
+        // this.m21 = -new Mat2(M.m00, M.m02, M.m10, M.m12).determinante();
+        // this.m22 =  new Mat2(M.m00, M.m01, M.m10, M.m11).determinante(); 
+        
+        this.m00 = M.m11*M.m22-M.m12*M.m21;
+        this.m01 = M.m10*M.m20-M.m12*M.m22;
+        this.m02 = M.m10*M.m21-M.m11*M.m20;
 
-        this.m10 = -new Mat2(M.m01, M.m02, M.m21, M.m22).determinante();
-        this.m11 =  new Mat2(M.m00, M.m02, M.m20, M.m22).determinante();
-        this.m12 = -new Mat2(M.m00, M.m01, M.m20, M.m21).determinante();
+        this.m00 = M.m01*M.m22-M.m02*M.m21;
+        this.m01 = M.m00*M.m20-M.m02*M.m22;
+        this.m02 = M.m00*M.m21-M.m01*M.m20;
 
-        this.m20 =  new Mat2(M.m01, M.m02, M.m11, M.m12).determinante();
-        this.m21 = -new Mat2(M.m00, M.m02, M.m10, M.m12).determinante();
-        this.m22 =  new Mat2(M.m00, M.m01, M.m10, M.m11).determinante(); 
+        this.m00 = M.m01*M.m12-M.m02*M.m11;
+        this.m01 = M.m00*M.m10-M.m02*M.m12;
+        this.m02 = M.m00*M.m11-M.m01*M.m10;
         return this;
     }
 
