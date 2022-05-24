@@ -4,6 +4,15 @@ import MathStuff.VecM.Vec3;
 
 public class Mat3 {
 
+    public static void main(String[] args) {
+        
+        Mat3 inverseTest = new Mat3(2,0,1,3,2, -4,1,0,3);
+       
+        inverseTest.show();
+        inverseTest.inverse();
+        inverseTest.show();
+    }
+
     public float m00, m01, m02,
                  m10, m11, m12,
                  m20, m21, m22;
@@ -71,6 +80,7 @@ public class Mat3 {
     }
 
     private static Mat3 M = new Mat3();
+    private static Mat3 Buffer = new Mat3();
     
     public Mat3 add(Mat3 B) {
 
@@ -107,85 +117,54 @@ public class Mat3 {
         return this;
     }
 
-    public Vec3 mul(Vec3 vec) {
-        Vec3 result = new Vec3();
-        M.m00 = vec.x;
-        M.m10 = vec.y;
-        M.m20 = vec.z;
-
-        this.mul(M);
-        result.x = this.m00;
-        result.y = this.m10;
-        result.z = this.m20;
-
-        return result;
-    }
-
-    private static Mat3 tmp = new Mat3();
-	public Mat3 mulBen(Mat3 right) {
-		tmp.clone(this);
-
-		this.m00 = tmp.m00 * right.m00 + tmp.m01 * right.m10 + tmp.m02 * right.m20;
-		this.m01 = tmp.m00 * right.m01 + tmp.m01 * right.m11 + tmp.m02 * right.m21;
-		this.m02 = tmp.m00 * right.m02 + tmp.m01 * right.m12 + tmp.m02 * right.m22;
-
-		this.m10 = tmp.m10 * right.m00 + tmp.m11 * right.m10 + tmp.m12 * right.m20;
-		this.m11 = tmp.m10 * right.m01 + tmp.m11 * right.m11 + tmp.m12 * right.m21;
-		this.m12 = tmp.m10 * right.m02 + tmp.m11 * right.m12 + tmp.m12 * right.m22;
-
-		this.m20 = tmp.m20 * right.m00 + tmp.m21 * right.m10 + tmp.m22 * right.m20;
-		this.m21 = tmp.m20 * right.m01 + tmp.m21 * right.m11 + tmp.m22 * right.m21;
-		this.m22 = tmp.m20 * right.m02 + tmp.m21 * right.m12 + tmp.m22 * right.m22;
-
-		return this;
-	}
-
     public Mat3 mul(float val) {
-        Mat3 M = this;
-        M.m00= this.m00*val; M.m01= this.m01*val; M.m02= this.m02*val; 
-        M.m10= this.m10*val; M.m11= this.m11*val; M.m12= this.m12*val; 
-        M.m20= this.m20*val; M.m21= this.m21*val; M.m22= this.m22*val; 
-        this.clone(M);
+        this.m00*=val; this.m01*=val; this.m02*=val; 
+        this.m10*=val; this.m11*=val; this.m12*=val; 
+        this.m20*=val; this.m21*=val; this.m22*=val; 
         return this;
     }
 
-    public float determinante() {
-        return m00*m11*m22+m01*m12*m20+m02*m10*m21-m20*m11*m02-m21*m12*m00-m22*m10*m01;
+    public Mat3 transpose() {
+        Buffer.clone(this);
+        this.m01 = Buffer.m10;
+        this.m02 = Buffer.m20;
+        
+        this.m10 = Buffer.m01;
+        this.m12 = Buffer.m21;
+
+        this.m20 = Buffer.m02;
+        this.m21 = Buffer.m12;
+        return this;
+    }
+
+    public Mat3 cofactor() {
+        M.clone(this);
+        this.m00 =  new Mat2(M.m11, M.m12, M.m21, M.m22).determinante();
+        this.m01 = -new Mat2(M.m10, M.m12, M.m20, M.m22).determinante();
+        this.m02 =  new Mat2(M.m10, M.m11, M.m20, M.m21).determinante();
+
+        this.m10 = -new Mat2(M.m01, M.m02, M.m21, M.m22).determinante();
+        this.m11 =  new Mat2(M.m00, M.m02, M.m20, M.m22).determinante();
+        this.m12 = -new Mat2(M.m00, M.m01, M.m20, M.m21).determinante();
+
+        this.m20 =  new Mat2(M.m01, M.m02, M.m11, M.m12).determinante();
+        this.m21 = -new Mat2(M.m00, M.m02, M.m10, M.m12).determinante();
+        this.m22 =  new Mat2(M.m00, M.m01, M.m10, M.m11).determinante(); 
+        return this;
+    }
+
+    public Mat3 adjuncte() {
+        this.cofactor();
+        this.transpose();
+        return this;
     }
 
     public Mat3 inverse() {
-        Mat3 Me = new Mat3("e");
-        //Me.II.set(Me.I.mul(this.m10).sub(Me.II.mul(this.m00)));
-        Me.changeRow(1, Me.I.mul(this.m10).sub(Me.II.mul(this.m00)));
+        return this.adjuncte().mul(1/M.determinante()).round(3);
+    }
 
-        this.changeRow(1, this.I.mul(this.m10).sub(this.II.mul(this.m00)));
-
-        //Me.III.set(Me.I.mul(this.m20).sub(Me.III.mul(this.m00)));
-        Me.changeRow(2, Me.I.mul(this.m20).sub(Me.III.mul(this.m00)));
-        
-        this.changeRow(2, this.I.mul(this.m20).sub(this.III.mul(this.m00)));
-
-        //Me.III.set(Me.I.mul(this.m21).sub(Me.III.mul(this.m01)));
-        Me.changeRow(2, Me.I.mul(this.m21).sub(Me.III.mul(this.m01)));
-        
-        this.changeRow(2, this.I.mul(this.m21).sub(this.III.mul(this.m01)));
-
-        //Me.I.set(Me.III.mul(this.m02).sub(Me.I.mul(this.m22)));
-        Me.changeRow(0, Me.III.mul(this.m02).sub(Me.I.mul(this.m22)));
-        
-        this.changeRow(0, this.III.mul(this.m02).sub(this.I.mul(this.m22)));
-
-        //Me.II.set(Me.III.mul(this.m12).sub(Me.II.mul(this.m22)));
-        Me.changeRow(1, Me.III.mul(this.m12).sub(Me.II.mul(this.m22)));
-
-        this.changeRow(1, this.III.mul(this.m12).sub(this.II.mul(this.m22)));
-
-        //Me.I.set(Me.II.mul(this.m01).sub(Me.I.mul(this.m11)));
-        Me.changeRow(0, Me.II.mul(this.m01).sub(Me.I.mul(this.m11)));
-
-        this.changeRow(0, this.II.mul(this.m01).sub(this.I.mul(this.m11)));
-
-        return this;
+    public float determinante() {
+        return this.m00*this.m11*this.m22+this.m01*this.m12*this.m20+this.m02*this.m10*this.m21-this.m20*this.m11*this.m02-this.m21*this.m12*this.m00-this.m22*this.m10*this.m01;
     }
 
     public Mat3 toUnderTriangle() {
@@ -194,12 +173,10 @@ public class Mat3 {
         this.m11 = -row2 * this.m01 + row1 * this.m11;
         this.m12 = -row2 * this.m02 + row1 * this.m12;
 
-
         this.m20 = -row3 * this.m00 + row1 * this.m20;
         this.m21 = -row3 * this.m01 + row1 * this.m21;
         this.m22 = -row2 * this.m02 + row1 * this.m22;
 
-        
         row2 = this.m11; row3 = this.m21;
         this.m21 = 0;
         this.m22 = -row3 * this.m12 + row2 * this.m22; 
@@ -233,7 +210,6 @@ public class Mat3 {
         return this;
     }
 
-
     private Mat3 changeRow (int row, Vec3 vec) {
         if(row>2) System.err.println("Row not existing.");
         
@@ -255,27 +231,10 @@ public class Mat3 {
         return this;
     }
 
-
     public void show() {
         System.out.println(this.m00 + " " + this.m01 + " " + this.m02);
         System.out.println(this.m10 + " " + this.m11 + " " + this.m12);
         System.out.println(this.m20 + " " + this.m21 + " " + this.m22);
         System.out.println();
     }
-
-    public static void main(String[] args) {
-        
-        Mat3 erste = new Mat3(1, 2, 1,
-                              1, 1, 3,
-                              1, 4, 2);
-
-        Mat3 zweite = new Mat3(2f,    0f,      -1f,
-                                 -0.2f,     -0.2f, 0.4f, 
-                                 -0.6f, 0.4f, 0.2f);
-        Mat3 Me = new Mat3("e");
-        erste.toUnderTriangle();
-        erste.show();
-
-    }   
-
 }
