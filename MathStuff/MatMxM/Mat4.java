@@ -6,6 +6,13 @@ import MathStuff.VecM.Vec4;
 public class Mat4 {
 
     public static void main(String[] args) {
+
+        Mat4 detTest = new Mat4(3, 1, 5, 1, -1, 0, -2, 0, 0, 0, 1, -1, 4, 0, 4, 1);
+        System.out.println(detTest.determinante()); //Sollte -3 sein
+
+        Mat4 inversTest = new Mat4(-1, 0, 0, 0, 2, 2, 0, 0, 1, 3, 1, 0, 4, 1, 2, -0.5f);
+        inversTest.inverse();
+        inversTest.show();
         
     }
 
@@ -90,11 +97,11 @@ public class Mat4 {
         this.m30 = M.m30; this.m31 = M.m31; this.m32 = M.m32; this.m33 = M.m33;
     }
 
-    private static Mat4 Mbuffer = new Mat4();
+    private static Mat4 M = new Mat4();
+    private static Mat4 Buffer = new Mat4();
     
     public Mat4 mul(Mat4 B) { 
-        Mbuffer.clone(this);
-        Mat4 M = Mbuffer;
+        M.clone(this);
         this.m00= M.m00*B.m00 + M.m01*B.m10 + M.m02*B.m20 + M.m03*B.m30;
         this.m01= M.m00*B.m01 + M.m01*B.m11 + M.m02*B.m21 + M.m03*B.m31;
         this.m02= M.m00*B.m02 + M.m01*B.m12 + M.m02*B.m22 + M.m03*B.m32;
@@ -117,5 +124,76 @@ public class Mat4 {
 
         return this;
     }
+
+    public Mat4 transpose() {
+        this.m01 = Buffer.m10;
+        this.m02 = Buffer.m20;
+        this.m03 = Buffer.m30;
+        
+        this.m12 = Buffer.m21;
+        this.m13 = Buffer.m31;
+
+        this.m23 = Buffer.m32;
+
+        this.m10 = Buffer.m01;
+        
+        this.m20 = Buffer.m02;
+        this.m21 = Buffer.m12;
+
+        this.m30 = Buffer.m03;
+        this.m31 = Buffer.m13;
+        this.m32 = Buffer.m23;
+
+
+        return this;
+    }
+
+    public float determinante() {
+        return this.m00*(this.m11*this.m22*this.m33 + this.m12*this.m23*this.m31 + this.m13*this.m21*this.m32 - this.m31*this.m22*this.m13 - this.m32*this.m23*this.m11 - this.m33*this.m21*this.m12)
+             - this.m10*(this.m01*this.m22*this.m33 + this.m02*this.m23*this.m31 + this.m03*this.m21*this.m32 - this.m31*this.m22*this.m03 - this.m32*this.m23*this.m01 - this.m33*this.m21*this.m02)
+             + this.m20*(this.m01*this.m12*this.m33 + this.m02*this.m13*this.m31 + this.m03*this.m11*this.m32 - this.m31*this.m12*this.m03 - this.m32*this.m13*this.m01 - this.m33*this.m11*this.m02)
+             - this.m30*(this.m01*this.m12*this.m23 + this.m02*this.m13*this.m21 + this.m03*this.m11*this.m22 - this.m21*this.m12*this.m03 - this.m22*this.m13*this.m01 - this.m23*this.m11*this.m02);
+    }
+
+    public Mat4 cofactor() {
+        M.clone(this);
+        this.m00 =   M.m11*M.m22*M.m33 + M.m12*M.m23*M.m31 + M.m13*M.m21*M.m32 - M.m31*M.m22*M.m13 - M.m32*M.m23*M.m11 - M.m33*M.m21*M.m12 ;
+        this.m01 = -(M.m10*M.m22*M.m33 + M.m12*M.m23*M.m30 + M.m13*M.m20*M.m32 - M.m30*M.m22*M.m13 - M.m32*M.m23*M.m10 - M.m33*M.m20*M.m12);
+        this.m02 =   M.m10*M.m21*M.m33 + M.m11*M.m23*M.m30 + M.m13*M.m20*M.m31 - M.m30*M.m21*M.m13 - M.m31*M.m23*M.m10 - M.m33*M.m20*M.m11 ;
+        this.m03 = -(M.m10*M.m21*M.m32 + M.m11*M.m22*M.m30 + M.m12*M.m20*M.m31 - M.m30*M.m21*M.m12 - M.m31*M.m22*M.m10 - M.m32*M.m20*M.m11);
+
+        this.m10 = -(M.m01*M.m22*M.m33 + M.m02*M.m23*M.m31 + M.m03*M.m21*M.m32 - M.m31*M.m22*M.m03 - M.m32*M.m23*M.m01 - M.m33*M.m21*M.m02);
+        this.m11 =   M.m00*M.m22*M.m33 + M.m02*M.m23*M.m30 + M.m03*M.m20*M.m32 - M.m30*M.m22*M.m03 - M.m32*M.m23*M.m00 - M.m33*M.m20*M.m02 ;
+        this.m12 = -(M.m00*M.m21*M.m33 + M.m01*M.m23*M.m30 + M.m03*M.m20*M.m31 - M.m30*M.m21*M.m03 - M.m31*M.m23*M.m00 - M.m33*M.m20*M.m01);
+        this.m13 =   M.m00*M.m21*M.m32 + M.m01*M.m22*M.m30 + M.m02*M.m20*M.m31 - M.m30*M.m21*M.m02 - M.m31*M.m22*M.m00 - M.m32*M.m20*M.m01 ;
+
+        this.m20 =   M.m01*M.m12*M.m33 + M.m02*M.m13*M.m31 + M.m03*M.m11*M.m32 - M.m31*M.m12*M.m03 - M.m32*M.m13*M.m01 - M.m33*M.m11*M.m02 ;
+        this.m21 = -(M.m00*M.m12*M.m33 + M.m02*M.m13*M.m30 + M.m03*M.m10*M.m32 - M.m30*M.m12*M.m03 - M.m32*M.m13*M.m00 - M.m33*M.m10*M.m02);
+        this.m22 =   M.m00*M.m11*M.m33 + M.m01*M.m13*M.m30 + M.m03*M.m10*M.m31 - M.m30*M.m11*M.m03 - M.m31*M.m13*M.m00 - M.m33*M.m10*M.m01 ;
+        this.m23 = -(M.m00*M.m11*M.m32 + M.m01*M.m12*M.m30 + M.m02*M.m10*M.m31 - M.m30*M.m11*M.m02 - M.m31*M.m12*M.m00 - M.m32*M.m10*M.m01);
+
+        this.m30 = -(M.m01*M.m12*M.m23 + M.m02*M.m13*M.m21 + M.m03*M.m11*M.m22 - M.m21*M.m12*M.m03 - M.m22*M.m13*M.m01 - M.m23*M.m11*M.m02);
+        this.m31 =   M.m00*M.m12*M.m23 + M.m02*M.m13*M.m20 + M.m03*M.m10*M.m22 - M.m20*M.m12*M.m03 - M.m22*M.m13*M.m00 - M.m23*M.m10*M.m02 ;
+        this.m32 = -(M.m00*M.m11*M.m23 + M.m01*M.m13*M.m20 + M.m03*M.m10*M.m21 - M.m20*M.m11*M.m03 - M.m21*M.m13*M.m00 - M.m23*M.m10*M.m01);
+        this.m33 =   M.m00*M.m11*M.m22 + M.m01*M.m12*M.m20 + M.m02*M.m10*M.m21 - M.m20*M.m11*M.m02 - M.m21*M.m12*M.m00 - M.m22*M.m10*M.m01 ;
+        
+        return this;
+    }
+
+    public Mat4 adjuncte() {
+        this.cofactor();
+        this.transpose();
+        return this;
+    }
+
+    public Mat4 inverse() {
+        return this.adjuncte().mul(1/M.determinante());
+    }
     
+    public void show() {
+        System.out.println(m00 + " " + m01 + " " + m02 + " " + m03);
+        System.out.println(m10 + " " + m11 + " " + m12 + " " + m13);
+        System.out.println(m20 + " " + m21 + " " + m22 + " " + m23);
+        System.out.println(m30 + " " + m31 + " " + m32 + " " + m33);
+    }
 }

@@ -6,21 +6,22 @@ public class Mat3 {
 
     public static void main(String[] args) {
         
-        Mat3 inverseTest = new Mat3(2,0,1,3,2, -4,1,0,3);
+        //Mat3 inverseTest = new Mat3(2,0,1,3,2, -4,1,0,3);
+        Mat3 inverseTest = new Mat3(-3,2,1,4,1,0,-1,6,2);
        
-        inverseTest.show();
+        //inverseTest.show();
+        long timeStart = System.nanoTime();
         inverseTest.inverse();
+        long timeEnd = System.nanoTime();
+        System.out.println("Inverse");
         inverseTest.show();
+
+        //System.out.println((timeEnd-timeStart));
     }
 
     public float m00, m01, m02,
                  m10, m11, m12,
                  m20, m21, m22;
-
-    public Vec3 I   = new Vec3(m00, m01, m02);
-    public Vec3 II  = new Vec3(m10, m11, m12);
-    public Vec3 III = new Vec3(m20, m21, m12);
-  
 
     public Mat3() {}
     
@@ -70,8 +71,6 @@ public class Mat3 {
                         (float)(Math.cos(beta)*Math.cos(gamma)), (float)(Math.sin(alpha)*Math.sin(beta)*Math.cos(gamma)+Math.cos(alpha)*Math.sin(gamma)), (float)(Math.cos(alpha)*Math.sin(beta)*Math.cos(gamma)-Math.sin(alpha)*Math.sin(gamma)),
                              (float)-Math.sin(beta),                     (float)(Math.sin(alpha)*Math.cos(beta)),                                     (float)(Math.cos(alpha)*Math.cos(beta))                       );
     }
-
-
     
     public void clone(Mat3 M) {
         this.m00= M.m00; this.m01= M.m01; this.m02=M.m02;
@@ -137,31 +136,33 @@ public class Mat3 {
         return this;
     }
 
+    
+
     public Mat3 cofactor() {
         M.clone(this);
-        // this.m00 =  new Mat2(M.m11, M.m12, M.m21, M.m22).determinante();
-        // this.m01 = -new Mat2(M.m10, M.m12, M.m20, M.m22).determinante();
-        // this.m02 =  new Mat2(M.m10, M.m11, M.m20, M.m21).determinante();
+        this.m00 =  new Mat2(M.m11, M.m12, M.m21, M.m22).determinante();
+        this.m01 = -new Mat2(M.m10, M.m12, M.m20, M.m22).determinante();
+        this.m02 =  new Mat2(M.m10, M.m11, M.m20, M.m21).determinante();
         
-        // this.m10 = -new Mat2(M.m01, M.m02, M.m21, M.m22).determinante();
-        // this.m11 =  new Mat2(M.m00, M.m02, M.m20, M.m22).determinante();
-        // this.m12 = -new Mat2(M.m00, M.m01, M.m20, M.m21).determinante();
+        this.m10 = -new Mat2(M.m01, M.m02, M.m21, M.m22).determinante();
+        this.m11 =  new Mat2(M.m00, M.m02, M.m20, M.m22).determinante();
+        this.m12 = -new Mat2(M.m00, M.m01, M.m20, M.m21).determinante();
         
-        // this.m20 =  new Mat2(M.m01, M.m02, M.m11, M.m12).determinante();
-        // this.m21 = -new Mat2(M.m00, M.m02, M.m10, M.m12).determinante();
-        // this.m22 =  new Mat2(M.m00, M.m01, M.m10, M.m11).determinante(); 
-        
-        this.m00 = M.m11*M.m22-M.m12*M.m21;
-        this.m01 = M.m10*M.m20-M.m12*M.m22;
-        this.m02 = M.m10*M.m21-M.m11*M.m20;
+        this.m20 =  new Mat2(M.m01, M.m02, M.m11, M.m12).determinante();
+        this.m21 = -new Mat2(M.m00, M.m02, M.m10, M.m12).determinante();
+        this.m22 =  new Mat2(M.m00, M.m01, M.m10, M.m11).determinante();
 
-        this.m00 = M.m01*M.m22-M.m02*M.m21;
-        this.m01 = M.m00*M.m20-M.m02*M.m22;
-        this.m02 = M.m00*M.m21-M.m01*M.m20;
+        // this.m00 =  M.m11*M.m22-M.m12*M.m21;
+        // this.m01 = -(M.m10*M.m20-M.m12*M.m22);
+        // this.m02 =  M.m10*M.m21-M.m11*M.m20;
 
-        this.m00 = M.m01*M.m12-M.m02*M.m11;
-        this.m01 = M.m00*M.m10-M.m02*M.m12;
-        this.m02 = M.m00*M.m11-M.m01*M.m10;
+        // this.m00 = -(M.m01*M.m22-M.m02*M.m21);
+        // this.m01 =  M.m00*M.m20-M.m02*M.m22;
+        // this.m02 = -(M.m00*M.m21-M.m01*M.m20);
+
+        // this.m00 =  M.m01*M.m12-M.m02*M.m11;
+        // this.m01 = -(M.m00*M.m10-M.m02*M.m12);
+        // this.m02 =  M.m00*M.m11-M.m01*M.m10;
         return this;
     }
 
@@ -204,7 +205,7 @@ public class Mat3 {
         return r;
     }
 
-    public Mat3 round(int places) {
+    private Mat3 round(int places) {
         float[][] arr = this.toArray();
         float fac = (float) Math.pow(10, places);
         for (int i = 0; i < 3; i++) {
@@ -219,27 +220,6 @@ public class Mat3 {
         this.m00= arr[0][0]; this.m01= arr[0][1]; this.m02= arr[0][2];
         this.m10= arr[1][0]; this.m11= arr[1][1]; this.m12= arr[1][2];
         this.m20= arr[2][0]; this.m21= arr[2][1]; this.m22= arr[2][2];
-        return this;
-    }
-
-    private Mat3 changeRow (int row, Vec3 vec) {
-        if(row>2) System.err.println("Row not existing.");
-        
-        if(row == 0) {
-            this.m00 = vec.x;
-            this.m01 = vec.y;
-            this.m02 = vec.z;
-        }
-        if(row == 1) {
-            this.m10 = vec.x;
-            this.m11 = vec.y;
-            this.m12 = vec.z;
-        }
-        if(row == 2) {
-            this.m20 = vec.x;
-            this.m21 = vec.y;
-            this.m22 = vec.z;
-        }
         return this;
     }
 

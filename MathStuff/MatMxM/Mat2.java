@@ -15,5 +15,4 @@ public class Mat2 {
     public float determinante() {
         return this.m00*this.m11-this.m10*this.m01;
     }
-    
 }
