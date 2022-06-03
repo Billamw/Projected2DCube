@@ -11,8 +11,12 @@ public class Mat4 {
         System.out.println(detTest.determinante()); //Sollte -3 sein
 
         Mat4 inversTest = new Mat4(-1, 0, 0, 0, 2, 2, 0, 0, 1, 3, 1, 0, 4, 1, 2, -0.5f);
-        inversTest.inverse();
-        inversTest.show(); // stimmt noch nicht
+        Mat4 inversTest2 = new Mat4(1, 0, 0, 0,
+                                    0, 1, 0, 0,
+                                    0, 0, 1, 9,
+                                    0, 0, 0, 1);
+        inversTest2.inverse();
+        inversTest2.show(); // stimmt noch nicht
         
     }
 
@@ -71,6 +75,13 @@ public class Mat4 {
                                0f,     (2*near)/height,            0f,           0f,
                                0f,        0f,            (far+near)/(near-far),     -1f,
                                0f,        0f,          (2*far*near)/(near-far),  0f );
+    }
+
+    public static Mat4 projectionMatrix(float d) {
+        return new Mat4(1, 0, 0, 0,
+                        0, 1, 0, 0,
+                        0, 0, 0, 0,
+                        0, 0,   1/d, 0);
     }
 
     public Mat4 add(Mat4 B) {
@@ -133,6 +144,7 @@ public class Mat4 {
     }
 
     public Mat4 transpose() {
+        Buffer.clone(this);
         this.m01 = Buffer.m10;
         this.m02 = Buffer.m20;
         this.m03 = Buffer.m30;
@@ -213,7 +225,7 @@ public class Mat4 {
     }
 
     public Mat4 adjuncte() {
-        this.cofactor2();
+        this.cofactor();
         this.transpose();
         return this;
     }

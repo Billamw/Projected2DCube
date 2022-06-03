@@ -8,6 +8,7 @@ public class Mat3 {
         
         //Mat3 inverseTest = new Mat3(2,0,1,3,2, -4,1,0,3);
         Mat3 inverseTest = new Mat3(-3,2,1,4,1,0,-1,6,2);
+        Mat3 inverseTest2 = new Mat3(1, 0, 0, 0, 1, 9, 0, 0, 1);
        
         //inverseTest.show();
         long timeStart = System.nanoTime();
@@ -140,29 +141,29 @@ public class Mat3 {
 
     public Mat3 cofactor() {
         M.clone(this);
-        this.m00 =  new Mat2(M.m11, M.m12, M.m21, M.m22).determinante();
-        this.m01 = -new Mat2(M.m10, M.m12, M.m20, M.m22).determinante();
-        this.m02 =  new Mat2(M.m10, M.m11, M.m20, M.m21).determinante();
+        // this.m00 =  new Mat2(M.m11, M.m12, M.m21, M.m22).determinante();
+        // this.m01 = -new Mat2(M.m10, M.m12, M.m20, M.m22).determinante();
+        // this.m02 =  new Mat2(M.m10, M.m11, M.m20, M.m21).determinante();
         
-        this.m10 = -new Mat2(M.m01, M.m02, M.m21, M.m22).determinante();
-        this.m11 =  new Mat2(M.m00, M.m02, M.m20, M.m22).determinante();
-        this.m12 = -new Mat2(M.m00, M.m01, M.m20, M.m21).determinante();
+        // this.m10 = -new Mat2(M.m01, M.m02, M.m21, M.m22).determinante();
+        // this.m11 =  new Mat2(M.m00, M.m02, M.m20, M.m22).determinante();
+        // this.m12 = -new Mat2(M.m00, M.m01, M.m20, M.m21).determinante();
         
-        this.m20 =  new Mat2(M.m01, M.m02, M.m11, M.m12).determinante();
-        this.m21 = -new Mat2(M.m00, M.m02, M.m10, M.m12).determinante();
-        this.m22 =  new Mat2(M.m00, M.m01, M.m10, M.m11).determinante();
+        // this.m20 =  new Mat2(M.m01, M.m02, M.m11, M.m12).determinante();
+        // this.m21 = -new Mat2(M.m00, M.m02, M.m10, M.m12).determinante();
+        // this.m22 =  new Mat2(M.m00, M.m01, M.m10, M.m11).determinante();
 
-        // this.m00 =  M.m11*M.m22-M.m12*M.m21;
-        // this.m01 = -(M.m10*M.m20-M.m12*M.m22);
-        // this.m02 =  M.m10*M.m21-M.m11*M.m20;
+        this.m00 =  M.m11*M.m22-M.m12*M.m21;
+        this.m01 = -(M.m10*M.m22-M.m12*M.m20);
+        this.m02 =  M.m10*M.m21-M.m11*M.m20;
 
-        // this.m00 = -(M.m01*M.m22-M.m02*M.m21);
-        // this.m01 =  M.m00*M.m20-M.m02*M.m22;
-        // this.m02 = -(M.m00*M.m21-M.m01*M.m20);
+        this.m10 = -(M.m01*M.m22-M.m02*M.m21);
+        this.m11 =  M.m00*M.m22-M.m02*M.m20;
+        this.m12 = -(M.m00*M.m21-M.m01*M.m20);
 
-        // this.m00 =  M.m01*M.m12-M.m02*M.m11;
-        // this.m01 = -(M.m00*M.m10-M.m02*M.m12);
-        // this.m02 =  M.m00*M.m11-M.m01*M.m10;
+        this.m20 =  M.m01*M.m12-M.m02*M.m11;
+        this.m21 = -(M.m00*M.m12-M.m02*M.m10);
+        this.m22 =  M.m00*M.m11-M.m01*M.m10;
         return this;
     }
 

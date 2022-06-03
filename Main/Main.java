@@ -8,7 +8,7 @@ import Main.Draw;
 public class Main {
     public static void main(String[] args) {
 
-        Vec3 pos = new Vec3(250,250,180);
+        Vec3 pos = new Vec3(250,250,1800);
         Vec3 pos1 = new Vec3(400,300,90);
         
         Cube cube1 = new Cube(pos, 200);
@@ -31,61 +31,65 @@ public class Main {
         Draw.setFps(30);
         
         //Draw.enableDoubleBuffering(true);
+
+        float lastangle = (float)Math.toRadians(30);
         while(true) {
+
             
-            Mat4 V = Mat4.ViewMatrix(250, 0, 500, 500);
-            Mat4 T = Mat4.moveMatrix(cube1.pos);
-            Mat3 r = Mat3.rotationX(alpha);
-            Mat3 y = Mat3.rotationY(beta);
-            Mat3 z = Mat3.rotationZ(alpha);
-            
-            Mat4 X = new Mat4(r);
-            Mat4 Y = new Mat4(y);
-            Mat4 Z = new Mat4(z);
+            //Mat4 V = Mat4.ViewMatrix(250, 0, 500, 500);
+            Mat4 V = Mat4.projectionMatrix(pos.z);
+            Mat4 T = Mat4.moveMatrix(cube1.pos);    
+            Mat4 X = new Mat4(Mat3.rotationX(alpha));
+            Mat4 Y = new Mat4(Mat3.rotationY(beta));
+            Mat4 Z = new Mat4(Mat3.rotationZ(alpha));
             Y.mul(X);
             //Z.mul(Y);
             T.mul(Y);
             V.mul(T);
             // X.mul(Y);
             // T.mul(X);
-
+            
             cube1.scale();
-
+            
             for (int i = 0; i < cube1.points.length; i++) {
                 Vec4 buff = new Vec4(cube1.points[i]);
                 buff.mul(V);
                 test[i] = new Vec2(buff);
-            
+                
                 Draw.filledEllipse(test[i], 1, 1);    
             }   
             cube1.connectPoints(test);
-
+            
             T = Mat4.moveMatrix(cube1.pos);
             Y.mul(X);
             //Z.mul(Y);
             T.mul(Y);
             
-                
+            
             // pyr.scale();
             // for (int i = 0; i < pyr.points.length; i++) {
-            //     Vec4 buff = new Vec4(pyr.points[i]);
-            //     buff.mul(V);
-            //     test[i] = new Vec2(buff);
+                //     Vec4 buff = new Vec4(pyr.points[i]);
+                //     buff.mul(V);
+                //     test[i] = new Vec2(buff);
+                
+                //     Draw.filledEllipse(test[i], 1, 1);   
+                // }   
+                // pyr.connectPoints(test);
+                
+                
+                alpha += Math.toRadians(3);
+                beta += Math.toRadians(5);
 
-            //     Draw.filledEllipse(test[i], 1, 1);   
-            // }   
-            // pyr.connectPoints(test);
-
-
-            alpha += Math.toRadians(3);
-            beta += Math.toRadians(6);
+                if(Draw.getLastTypedKeyCode() == 0x44) {
+                    lastangle += 1;
+                }
+                
+                Draw.syncToFrameRate();
+                Draw.clearScreen();
+                
+            }
             
-            Draw.syncToFrameRate();
-            Draw.clearScreen();
+            
+        }
         
     }
-    
-
-    }
-
-}
