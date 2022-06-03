@@ -1,9 +1,10 @@
 package Body;
 
+import Main.Draw;
 import MathStuff.MatMxM.*;
 import MathStuff.VecM.*;
 
-public class Cube {
+public class Cube implements Body{
 
     public Vec3 a,b,c,d,e,f,g,h;
     public Vec3[] points = {a,b,c,d,e,f,g,h};
@@ -55,8 +56,40 @@ public class Cube {
         this.h.mul(size);
     }
 
-    public void connectPoints() {
-
+    @Override
+    public void connectPoints(Vec3[] points) {
+        Draw.line(new Vec2(points[0]),new Vec2(points[1]));
+        Draw.line(new Vec2(points[1]),new Vec2(points[2]));
+        Draw.line(new Vec2(points[2]),new Vec2(points[3]));
+        Draw.line(new Vec2(points[3]),new Vec2(points[0]));
+        
+        Draw.line(new Vec2(points[4]),new Vec2(points[5]));
+        Draw.line(new Vec2(points[5]),new Vec2(points[6]));
+        Draw.line(new Vec2(points[6]),new Vec2(points[7]));
+        Draw.line(new Vec2(points[7]),new Vec2(points[4]));
+        
+        Draw.line(new Vec2(points[0]),new Vec2(points[4]));
+        Draw.line(new Vec2(points[1]),new Vec2(points[5]));
+        Draw.line(new Vec2(points[2]),new Vec2(points[6]));
+        Draw.line(new Vec2(points[3]),new Vec2(points[7]));
+        
+    }
+    public void connectPoints(Vec2[] points) {
+        Draw.line(points[0],points[1]);
+        Draw.line(points[1],points[2]);
+        Draw.line(points[2],points[3]);
+        Draw.line(points[3],points[0]);
+        
+        Draw.line(points[4],points[5]);
+        Draw.line(points[5],points[6]);
+        Draw.line(points[6],points[7]);
+        Draw.line(points[7],points[4]);
+        
+        Draw.line(points[0],points[4]);
+        Draw.line(points[1],points[5]);
+        Draw.line(points[2],points[6]);
+        Draw.line(points[3],points[7]);
+        
     }
 
 

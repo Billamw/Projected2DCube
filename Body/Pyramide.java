@@ -1,8 +1,10 @@
 package Body;
 
+import Main.Draw;
+import MathStuff.VecM.Vec2;
 import MathStuff.VecM.Vec3;
 
-public class Pyramide {
+public class Pyramide implements Body {
 
     public Vec3 a,b,c,d,e;
     public Vec3[] points = new Vec3[5];
@@ -37,5 +39,27 @@ public class Pyramide {
         this.e.mul(size);
     }
 
+    public void connectPoints(Vec3[] points) {
+        Draw.line(new Vec2(points[0]), new Vec2(points[1]));
+        Draw.line(new Vec2(points[1]), new Vec2(points[2]));
+        Draw.line(new Vec2(points[2]), new Vec2(points[3]));
+        Draw.line(new Vec2(points[3]), new Vec2(points[0]));
+        Draw.line(new Vec2(points[0]), new Vec2(points[4]));
+        Draw.line(new Vec2(points[1]), new Vec2(points[4]));
+        Draw.line(new Vec2(points[2]), new Vec2(points[4]));
+        Draw.line(new Vec2(points[3]), new Vec2(points[4]));
+    }
+
+    public void connectPoints(Vec2[] points) {
+        Draw.line(points[0], points[1]);
+        Draw.line(points[1], points[2]);
+        Draw.line(points[2], points[3]);
+        Draw.line(points[3], points[0]);
+        Draw.line(points[0], points[4]);
+        Draw.line(points[1], points[4]);
+        Draw.line(points[2], points[4]);
+        Draw.line(points[3], points[4]);
+    }
+    
 
 }

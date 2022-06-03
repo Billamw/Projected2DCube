@@ -12,7 +12,7 @@ public class Mat4 {
 
         Mat4 inversTest = new Mat4(-1, 0, 0, 0, 2, 2, 0, 0, 1, 3, 1, 0, 4, 1, 2, -0.5f);
         inversTest.inverse();
-        inversTest.show();
+        inversTest.show(); // stimmt noch nicht
         
     }
 
@@ -64,6 +64,13 @@ public class Mat4 {
                         0,1,0, t.y,
                         0,0,1, t.z,
                         0,0,0,1);
+    }
+
+    public static Mat4 ViewMatrix(float near, float far, float with, float height) {
+        return new Mat4((2*near)/with,         0f,                 0f,           0f,
+                               0f,     (2*near)/height,            0f,           0f,
+                               0f,        0f,            (far+near)/(near-far),     -1f,
+                               0f,        0f,          (2*far*near)/(near-far),  0f );
     }
 
     public Mat4 add(Mat4 B) {
@@ -180,8 +187,33 @@ public class Mat4 {
         return this;
     }
 
+    public Mat4 cofactor2() {
+        M.clone(this);
+        this.m00 =  new Mat3(M.m11, M.m12, M.m13, M.m21, M.m22, M.m23, M.m31, M.m32, M.m33).determinante();
+        this.m01 = -new Mat3(M.m10, M.m12, M.m13, M.m20, M.m22, M.m23, M.m30, M.m32, M.m33).determinante();
+        this.m02 =  new Mat3(M.m10, M.m11, M.m13, M.m20, M.m21, M.m23, M.m30, M.m31, M.m33).determinante();
+        this.m03 = -new Mat3(M.m10, M.m11, M.m12, M.m20, M.m21, M.m22, M.m30, M.m31, M.m32).determinante();
+
+        this.m10 = -new Mat3(M.m01, M.m02, M.m03, M.m21, M.m22, M.m23, M.m31, M.m32, M.m33).determinante();
+        this.m11 =  new Mat3(M.m00, M.m02, M.m03, M.m20, M.m22, M.m23, M.m30, M.m32, M.m33).determinante();
+        this.m12 = -new Mat3(M.m00, M.m01, M.m03, M.m20, M.m21, M.m23, M.m30, M.m13, M.m33).determinante();
+        this.m13 =  new Mat3(M.m00, M.m01, M.m02, M.m20, M.m21, M.m22, M.m30, M.m31, M.m32).determinante();
+
+        this.m20 =  new Mat3(M.m01, M.m02, M.m03, M.m11, M.m12, M.m13, M.m31, M.m32, M.m33).determinante();
+        this.m21 = -new Mat3(M.m00, M.m02, M.m03, M.m10, M.m12, M.m13, M.m30, M.m32, M.m33).determinante();
+        this.m22 =  new Mat3(M.m00, M.m01, M.m03, M.m10, M.m11, M.m13, M.m30, M.m31, M.m33).determinante();
+        this.m23 = -new Mat3(M.m00, M.m01, M.m02, M.m10, M.m11, M.m12, M.m30, M.m31, M.m32).determinante();
+
+        this.m30 = -new Mat3(M.m01, M.m02, M.m03, M.m11, M.m12, M.m13, M.m21, M.m22, M.m23).determinante();
+        this.m31 =  new Mat3(M.m00, M.m02, M.m03, M.m10, M.m12, M.m13, M.m20, M.m22, M.m23).determinante();
+        this.m32 = -new Mat3(M.m00, M.m01, M.m03, M.m10, M.m11, M.m13, M.m20, M.m21, M.m23).determinante();
+        this.m33 =  new Mat3(M.m00, M.m01, M.m02, M.m10, M.m11, M.m12, M.m20, M.m21, M.m22).determinante();
+        
+        return this;
+    }
+
     public Mat4 adjuncte() {
-        this.cofactor();
+        this.cofactor2();
         this.transpose();
         return this;
     }
