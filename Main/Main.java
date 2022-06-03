@@ -8,10 +8,11 @@ import Main.Draw;
 public class Main {
     public static void main(String[] args) {
 
-        Vec3 pos = new Vec3(250,250,40);
+        Vec3 pos = new Vec3(250,250,180);
+        Vec3 pos1 = new Vec3(400,300,90);
         
         Cube cube1 = new Cube(pos, 200);
-        Pyramide pyr = new Pyramide(pos, 200);
+        Pyramide pyr = new Pyramide(pos1, 200);
         float[][] fill = { {1,0,0},
                            {0,1,0} };
         MatN orthProject = new MatN(fill);
@@ -21,7 +22,7 @@ public class Main {
         float beta = (float)Math.toRadians(0);
         
         
-        Vec3[] test = new Vec3[8];
+        Vec2[] test = new Vec2[8];
         
 
         Draw.setBackgroundColor(50, 50, 50);
@@ -31,6 +32,8 @@ public class Main {
         
         //Draw.enableDoubleBuffering(true);
         while(true) {
+            
+            Mat4 V = Mat4.ViewMatrix(250, 0, 500, 500);
             Mat4 T = Mat4.moveMatrix(cube1.pos);
             Mat3 r = Mat3.rotationX(alpha);
             Mat3 y = Mat3.rotationY(beta);
@@ -42,62 +45,43 @@ public class Main {
             Y.mul(X);
             //Z.mul(Y);
             T.mul(Y);
-            //T.mul(X);
+            V.mul(T);
+            // X.mul(Y);
+            // T.mul(X);
+
             cube1.scale();
-            // for (int i = 0; i < cube1.points.length; i++) {
-            //     Vec4 buff = new Vec4(cube1.points[i]);
-            //     buff.mul(T);
-            //     //buff.showHor();
-            //     test[i] = new Vec3(buff);
-            //     //cube1.points[i] = new Vec3(buff);
-            //     // test[i].x/=test[i].z;
-            //     // test[i].y/=test[i].z;
-            
-            //     Draw.filledEllipse(test[i].mul(orthProject), 1, 1);  
-            //     //Draw.filledEllipse(cube1.points[i].mul(orthProject), 5, 5);  
-            // }   
-            
-            // Draw.line(new Vec2(test[0]),new Vec2(test[1]));
-            // Draw.line(new Vec2(test[1]),new Vec2(test[2]));
-            // Draw.line(new Vec2(test[2]),new Vec2(test[3]));
-            // Draw.line(new Vec2(test[3]),new Vec2(test[0]));
-            
-            // Draw.line(new Vec2(test[4]),new Vec2(test[5]));
-            // Draw.line(new Vec2(test[5]),new Vec2(test[6]));
-            // Draw.line(new Vec2(test[6]),new Vec2(test[7]));
-            // Draw.line(new Vec2(test[7]),new Vec2(test[4]));
-            
-            // Draw.line(new Vec2(test[0]),new Vec2(test[4]));
-            // Draw.line(new Vec2(test[1]),new Vec2(test[5]));
-            // Draw.line(new Vec2(test[2]),new Vec2(test[6]));
-            // Draw.line(new Vec2(test[3]),new Vec2(test[7]));
-                
-            pyr.scale();
-            for (int i = 0; i < pyr.points.length; i++) {
-                Vec4 buff = new Vec4(pyr.points[i]);
-                buff.mul(T);
-                //buff.showHor();
-                test[i] = new Vec3(buff);
-                //pyr.points[i] = test[i];
 
-
-                Draw.filledEllipse(test[i].mul(orthProject), 1, 1);  
-                //Draw.filledEllipse(pyr.points[i].mul(orthProject), 5, 5);  
+            for (int i = 0; i < cube1.points.length; i++) {
+                Vec4 buff = new Vec4(cube1.points[i]);
+                buff.mul(V);
+                test[i] = new Vec2(buff);
+            
+                Draw.filledEllipse(test[i], 1, 1);    
             }   
-            Draw.line(new Vec2(test[0]), new Vec2(test[1]));
-            Draw.line(new Vec2(test[1]), new Vec2(test[2]));
-            Draw.line(new Vec2(test[2]), new Vec2(test[3]));
-            Draw.line(new Vec2(test[3]), new Vec2(test[0]));
-            Draw.line(new Vec2(test[0]), new Vec2(test[4]));
-            Draw.line(new Vec2(test[1]), new Vec2(test[4]));
-            Draw.line(new Vec2(test[2]), new Vec2(test[4]));
-            Draw.line(new Vec2(test[3]), new Vec2(test[4]));
+            cube1.connectPoints(test);
+
+            T = Mat4.moveMatrix(cube1.pos);
+            Y.mul(X);
+            //Z.mul(Y);
+            T.mul(Y);
+            
+                
+            // pyr.scale();
+            // for (int i = 0; i < pyr.points.length; i++) {
+            //     Vec4 buff = new Vec4(pyr.points[i]);
+            //     buff.mul(V);
+            //     test[i] = new Vec2(buff);
+
+            //     Draw.filledEllipse(test[i], 1, 1);   
+            // }   
+            // pyr.connectPoints(test);
+
 
             alpha += Math.toRadians(3);
             beta += Math.toRadians(6);
             
             Draw.syncToFrameRate();
-        Draw.clearScreen();
+            Draw.clearScreen();
         
     }
     
