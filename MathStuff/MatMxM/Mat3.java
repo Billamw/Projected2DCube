@@ -48,16 +48,16 @@ public class Mat3 {
 
     public static Mat3 rotationX(double alpha) {
         double a = alpha;
-        return new Mat3(1,     0,            0,
-                        0,(float)Math.cos(a), (float)-Math.sin(a),
-                        0,(float)Math.sin(a), (float) Math.cos(a));
+        return new Mat3((float) Math.cos(a), 0, (float)Math.sin(a), 
+                              0,         1,     0,
+                        (float)-Math.sin(a), 0, (float)Math.cos(a)); /// Ich habe rotX und rotY vertauscht, da es in der main so aussah, als ob sie vertauscht waren
     }
 
     public static Mat3 rotationY(double alpha) {
         double a = alpha;
-        return new Mat3((float) Math.cos(a), 0, (float)Math.sin(a), 
-                              0,         1,     0,
-                        (float)-Math.sin(a), 0, (float)Math.cos(a));
+        return new Mat3(1,     0,            0,
+                        0,(float)Math.cos(a), (float)-Math.sin(a),
+                        0,(float)Math.sin(a), (float) Math.cos(a));
     }
 
     public static Mat3 rotationZ(double alpha) {

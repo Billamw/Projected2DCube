@@ -42,6 +42,10 @@ public class Cube implements Body{
         points[7] = h;
     }
 
+    public Vec3[] getPoints() {
+        return points;
+    }
+
     public void scale() {
         if(this.size<1 || this.size>1) return;       
         this.size = size2;
@@ -91,6 +95,7 @@ public class Cube implements Body{
         Draw.line(points[3],points[7]);
         
     }
+
 
 
 }

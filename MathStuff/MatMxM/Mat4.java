@@ -1,5 +1,7 @@
 package MathStuff.MatMxM;
 
+import java.time.Year;
+
 import MathStuff.VecM.Vec3;
 import MathStuff.VecM.Vec4;
 
@@ -80,9 +82,31 @@ public class Mat4 {
     public static Mat4 projectionMatrix(float d) {
         return new Mat4(1, 0, 0, 0,
                         0, 1, 0, 0,
-                        0, 0, 0, 0,
-                        0, 0,   1/d, 0);
+                        0, 0, 1, 1/d,
+                        0, 0, 0, 0);
     }
+    /**
+     * 
+     * @param eye position of the camera
+     * @param target
+     * @param up usually (0 1 0)
+     * @return
+     */
+    public static Mat4 lookAt (Vec3 eye, Vec3 target, Vec3 up) {
+        Vec3 zAxsis = eye.sub(target).normalize();
+        Vec3 xAxsis = Vec3.cross(up, zAxsis).normalize();
+        Vec3 yAxsis = Vec3.cross(xAxsis, zAxsis);
+        float dotX = -xAxsis.scalar(eye);
+        float dotY = -yAxsis.scalar(eye);
+        float dotZ = -zAxsis.scalar(eye);
+        return new Mat4(xAxsis.x, yAxsis.x, zAxsis.x, 0,
+                        xAxsis.y, yAxsis.y, zAxsis.y, 0,
+                        xAxsis.x, yAxsis.x, zAxsis.x, 0,
+                          dotX  ,   dotY  ,   dotZ  , 1
+                        );
+    }
+
+
 
     public Mat4 add(Mat4 B) {
         this.m00 += B.m00; this.m01 += B.m01; this.m02 += B.m02; this.m03 += B.m03;
@@ -195,11 +219,11 @@ public class Mat4 {
         this.m31 =   M.m00*M.m12*M.m23 + M.m02*M.m13*M.m20 + M.m03*M.m10*M.m22 - M.m20*M.m12*M.m03 - M.m22*M.m13*M.m00 - M.m23*M.m10*M.m02 ;
         this.m32 = -(M.m00*M.m11*M.m23 + M.m01*M.m13*M.m20 + M.m03*M.m10*M.m21 - M.m20*M.m11*M.m03 - M.m21*M.m13*M.m00 - M.m23*M.m10*M.m01);
         this.m33 =   M.m00*M.m11*M.m22 + M.m01*M.m12*M.m20 + M.m02*M.m10*M.m21 - M.m20*M.m11*M.m02 - M.m21*M.m12*M.m00 - M.m22*M.m10*M.m01 ;
-        
+
         return this;
     }
 
-    public Mat4 cofactor2() {
+    public Mat4 cofactorNonPerfomant() {
         M.clone(this);
         this.m00 =  new Mat3(M.m11, M.m12, M.m13, M.m21, M.m22, M.m23, M.m31, M.m32, M.m33).determinante();
         this.m01 = -new Mat3(M.m10, M.m12, M.m13, M.m20, M.m22, M.m23, M.m30, M.m32, M.m33).determinante();

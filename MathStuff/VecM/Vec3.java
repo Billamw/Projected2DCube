@@ -43,11 +43,15 @@ public class Vec3 {
         return result;
     }
 
-    public Vec3 negative() {
-        this.x = -this.x;
-        this.y = -this.y;
-        this.z = -this.z;
-        return this;
+    // public Vec3 negative() {
+    //     this.x = -this.x;
+    //     this.y = -this.y;
+    //     this.z = -this.z;
+    //     return this;
+    // }
+
+    public static Vec3 add(Vec3 a, Vec3 b) {
+        return new Vec3(a.x+b.x, a.y+b.y, a.z+b.z);
     }
 
     public Vec3 add (Vec3 vecRight) {
@@ -78,6 +82,13 @@ public class Vec3 {
         return this;
     }
 
+    public Vec3 normalize() {
+        this.x *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
+        this.y *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
+        this.z *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
+        return this;
+    }
+
     /**
      * Multyply a Vec3 wit a 2x3 Matrix
      * @param B
@@ -100,16 +111,19 @@ public class Vec3 {
     public float scalar(Vec3 vecRight) {
         return this.x * vecRight.x + this.y * vecRight.y + this.z * vecRight.z;
     }
+    public float dot(Vec3 vecRight) {
+        return this.x * vecRight.x + this.y * vecRight.y + this.z * vecRight.z;
+    }
 
     public float angleBetween(Vec3 vecRight) {
         return (float) Math.acos( this.scalar(vecRight)/(this.length()*vecRight.length()) );
     }
 
-    public Vec3 cross (Vec3 vecRight) {
+    public static Vec3 cross (Vec3 vecLeft,Vec3 vecRight) {
         Vec3 Vres = new Vec3();
-        Vres.x = this.y*vecRight.z - this.z*vecRight.y;
-        Vres.y = this.z*vecRight.x - this.x*vecRight.z;
-        Vres.z = this.x*vecRight.y - this.y*vecRight.x;
+        Vres.x = vecLeft.y*vecRight.z - vecLeft.z*vecRight.y;
+        Vres.y = vecLeft.z*vecRight.x - vecLeft.x*vecRight.z;
+        Vres.z = vecLeft.x*vecRight.y - vecLeft.y*vecRight.x;
         return Vres;
     }
 

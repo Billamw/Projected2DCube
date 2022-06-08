@@ -28,6 +28,10 @@ public class Pyramide implements Body {
         points[4] = e;
     }
 
+    public Vec3[] getPoints() {
+        return points;
+    }
+    
     public void scale() {
         if(this.size<1 || this.size>1) return;       
         this.size = size2;

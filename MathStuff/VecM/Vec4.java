@@ -62,13 +62,13 @@ public class Vec4 {
         this.w -= vecRight.w;
         return this;
     }
-    public Vec4 subBuff (Vec4 vecRight) {
-        Vec4 Buff= this;
-        Buff.x -= vecRight.x;
-        Buff.y -= vecRight.y;
-        Buff.z -= vecRight.z;
-        Buff.w -= vecRight.w;
-        return Buff;
+
+    public Vec4 normalize() {
+        this.x *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z + this.w*this.w);
+        this.y *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z + this.w*this.w);
+        this.z *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z + this.w*this.w);
+        this.w *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z + this.w*this.w);
+        return this;
     }
 
     public Vec4 mul(float val) {
