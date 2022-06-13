@@ -48,6 +48,10 @@ public class Vec2 {
         return this.x*vRight.y-vRight.x*this.y;
     }
 
+    public void show() {
+        System.out.println("x:" + this.x + " y:" + this.y);
+    }
+
     
 
 }

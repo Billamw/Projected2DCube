@@ -7,21 +7,6 @@ import MathStuff.VecM.Vec4;
 
 public class Mat4 {
 
-    public static void main(String[] args) {
-
-        Mat4 detTest = new Mat4(3, 1, 5, 1, -1, 0, -2, 0, 0, 0, 1, -1, 4, 0, 4, 1);
-        System.out.println(detTest.determinante()); //Sollte -3 sein
-
-        Mat4 inversTest = new Mat4(-1, 0, 0, 0, 2, 2, 0, 0, 1, 3, 1, 0, 4, 1, 2, -0.5f);
-        Mat4 inversTest2 = new Mat4(1, 0, 0, 0,
-                                    0, 1, 0, 0,
-                                    0, 0, 1, 9,
-                                    0, 0, 0, 1);
-        inversTest2.inverse();
-        inversTest2.show(); // stimmt noch nicht
-        
-    }
-
     public float m00, m01, m02, m03;
     public float m10, m11, m12, m13;
     public float m20, m21, m22, m23;
@@ -65,7 +50,7 @@ public class Mat4 {
      * @param t
      * @return
      */
-    public static Mat4 moveMatrix(Vec3 t) {
+    public static Mat4 translationMatrix(Vec3 t) {
         return new Mat4(1,0,0, t.x, 
                         0,1,0, t.y,
                         0,0,1, t.z,
@@ -88,23 +73,41 @@ public class Mat4 {
     /**
      * 
      * @param eye position of the camera
-     * @param target
+     * @param target position of the target
      * @param up usually (0 1 0)
      * @return
      */
     public static Mat4 lookAt (Vec3 eye, Vec3 target, Vec3 up) {
-        Vec3 zAxsis = eye.sub(target).normalize();
-        Vec3 xAxsis = Vec3.cross(up, zAxsis).normalize();
-        Vec3 yAxsis = Vec3.cross(xAxsis, zAxsis);
+        Vec3 zAxsis = Vec3.sub(eye, target);
+        zAxsis.normalize();
+        Vec3 xAxsis = Vec3.cross(up, zAxsis);
+        //xAxsis.showHor();
+        xAxsis.normalize();
+        Vec3 yAxsis = Vec3.cross(zAxsis, xAxsis);
         float dotX = -xAxsis.scalar(eye);
         float dotY = -yAxsis.scalar(eye);
         float dotZ = -zAxsis.scalar(eye);
         return new Mat4(xAxsis.x, yAxsis.x, zAxsis.x, 0,
                         xAxsis.y, yAxsis.y, zAxsis.y, 0,
-                        xAxsis.x, yAxsis.x, zAxsis.x, 0,
+                        xAxsis.z, yAxsis.z, zAxsis.z, 0,
                           dotX  ,   dotY  ,   dotZ  , 1
                         );
     }
+    
+
+    public static Mat4 lookAt(Vec3 eye, Vec3 target, Vec3 up, Vec3 right) {
+        return new Mat4(right.x, up.x, right.x, target.x,
+                        right.y, up.y, right.y, target.y,
+                        right.z, up.z, right.z, target.z,
+                        0, 0, 0, 1);
+    }
+
+    public static Mat4 projectionMatrix(int width, int height) {
+		return new Mat4(width/2f,  0,    0, -width/2f,
+				         0,  -height/2f, 0, -height/2f,
+				         0,   0,    1,	0,
+				         0,   0,    0,	1 );
+	}
 
 
 
@@ -263,5 +266,11 @@ public class Mat4 {
         System.out.println(m10 + " " + m11 + " " + m12 + " " + m13);
         System.out.println(m20 + " " + m21 + " " + m22 + " " + m23);
         System.out.println(m30 + " " + m31 + " " + m32 + " " + m33);
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Mat4 V = Mat4.lookAt(new Vec3(250, 250, -100), new Vec3(250, 250, 0), new Vec3(0, 1, 0));
+        V.show();
     }
 }

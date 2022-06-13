@@ -7,35 +7,43 @@ public class Vec4 {
     public float y;
     public float z;
     public float w;
-
+    
     public Vec4() {}
-
+    
     public Vec4(float x, float y, float z, float w) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.w = w;
     }
-
+    
     public Vec4(Vec3 H) {
         this.x = H.x;
         this.y = H.y;
         this.z = H.z;
         this.w =  1 ;
     }
-
+    
     public Vec4(float[] arr) {
         this.x = arr[0];
         this.y = arr[1];
         this.z = arr[2];
         this.w = arr[3];
     }
-
+    
+    private static Vec4 tmp  = new Vec4();
+    private static Vec4 Buff = new Vec4();
     public void set(float x, float y, float z, float w){
-        this.x = x; this.y = y; this.z = z; this.w = w;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
     }
     public Vec4 set(Vec4 vec){
-        this.x = vec.x; this.y = vec.y; this.z = vec.z;
+        this.x = vec.x;
+        this.y = vec.y;
+        this.z = vec.z;
+        this.w = vec.w;
         return this;
     }
     public float[] toArray() {
@@ -64,10 +72,12 @@ public class Vec4 {
     }
 
     public Vec4 normalize() {
-        this.x *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z + this.w*this.w);
-        this.y *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z + this.w*this.w);
-        this.z *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z + this.w*this.w);
-        this.w *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z + this.w*this.w);
+        tmp = this;
+        float pyth = (float)Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z + this.w*this.w);
+        this.x /= pyth;
+        this.y /= pyth;
+        this.z /= pyth;
+        this.w /= pyth;
         return this;
     }
 
@@ -79,7 +89,7 @@ public class Vec4 {
         return this;
     }
     public Vec4 mulBuff(float val) {
-        Vec4 Buff= this;
+        Buff = this;
         Buff.x*=val;
         Buff.y*=val;
         Buff.z*=val;
@@ -92,7 +102,7 @@ public class Vec4 {
      * @return
      */
     public Vec4 mul(Mat4 B) {
-        Vec4 Buff= this;
+        Buff = this;
         this.x=B.m00*Buff.x+B.m01*Buff.y+B.m02*Buff.z+B.m03*Buff.w;
         this.y=B.m10*Buff.x+B.m11*Buff.y+B.m12*Buff.z+B.m13*Buff.w;
         this.z=B.m20*Buff.x+B.m21*Buff.y+B.m22*Buff.z+B.m23*Buff.w;
@@ -103,6 +113,12 @@ public class Vec4 {
     public void showHor() {
         System.out.println(x + ", " + y + ", " + z + ", " + w);
     }
-
+    
+    public static void main(String[] args) {
+        Vec4 a = new Vec4(0, 0, 100, 0);
+        a.normalize();
+        a.showHor();
+        System.out.println(4f/5f);
+    }
     
 }

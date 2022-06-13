@@ -61,6 +61,10 @@ public class Vec3 {
         return this;
     }
 
+    public static Vec3 sub(Vec3 vecLeft, Vec3 vecRight) {
+        return new Vec3(vecLeft.x-vecRight.x, vecLeft.y-vecRight.y, vecLeft.z-vecRight.z);
+    }
+
     public Vec3 sub (Vec3 vecRight) {
         this.x -= vecRight.x;
         this.y -= vecRight.y;
@@ -83,9 +87,10 @@ public class Vec3 {
     }
 
     public Vec3 normalize() {
-        this.x *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
-        this.y *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
-        this.z *= Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
+        float pythagoras = (float) Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
+        this.x /= pythagoras;
+        this.y /= pythagoras;
+        this.z /= pythagoras;
         return this;
     }
 
