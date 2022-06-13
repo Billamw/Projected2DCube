@@ -40,11 +40,8 @@ public class Main {
         Mat4 P, T, X, Y, Z, V, M = new Mat4();
         Mat4 MVP = new Mat4();
 
-        int count = 0;
-
         while(true) {
-            count++;
-            
+
             P = Mat4.projectionMatrix(width); // muss noch in die draw rein
             T = Mat4.translationMatrix(pos);    
             X = new Mat4(Mat3.rotationX(mouseAngleY));
@@ -80,19 +77,19 @@ public class Main {
             if(Draw.getLastPressedKey() == 0x27 ) { //left key
                 pos.x += 20;
             }
-            
+
             if(Draw.getLastPressedKey() == 0x25) { // right key
                 pos.x -= 20;
             }
-            
+
             if(Draw.getLastPressedKey() == 0x26) { // up key
                 pos.y -= 20;
             }
-            
+
             if(Draw.getLastPressedKey() == 0x28) { // down key
                 pos.y += 20;
             }
-            
+
 
             if(Draw.isLeftMouseButtonPressed()) {
                 mouseAngleX = (float)Math.toRadians((Draw.getMouseY() - 0) * (180 - (-180)) / (  0   - height) -180);
