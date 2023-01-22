@@ -270,7 +270,13 @@ public class Mat4 {
     }
 
     public static void main(String[] args) {
-        Mat4 V = Mat4.lookAt(new Vec3(250, 250, -100), new Vec3(250, 250, 0), new Vec3(0, 1, 0));
-        V.show();
+        // Mat4 V = Mat4.lookAt(new Vec3(250, 250, -100), new Vec3(250, 250, 0), new Vec3(0, 1, 0));
+        // V.show();
+        Mat4 a = new Mat4(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 3, 2, 1, 0);
+        a.inverse();
+        a.show();
+        Vec4 k = new Vec4(0, 1, 0, 1);
+        k.mul(a);
+        k.showHor();
     }
 }
