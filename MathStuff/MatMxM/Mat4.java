@@ -275,7 +275,7 @@ public class Mat4 {
         Mat4 a = new Mat4(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 3, 2, 1, 0);
         a.inverse();
         a.show();
-        Vec4 k = new Vec4(0, 1, 0, 1);
+        Vec4 k = new Vec4(0, 1, 0, 0);
         k.mul(a);
         k.showHor();
     }

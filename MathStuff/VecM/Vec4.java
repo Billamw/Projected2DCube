@@ -32,7 +32,7 @@ public class Vec4 {
     }
     
     private static Vec4 tmp  = new Vec4();
-    private static Vec4 Buff = new Vec4();
+    private Vec4 Buff = null;
     public void set(float x, float y, float z, float w){
         this.x = x;
         this.y = y;
@@ -97,7 +97,7 @@ public class Vec4 {
         return Buff;
     }
     /**
-     * Multipys Matrix with a Vector 
+     * Multiplys Matrix with a Vector 
      * @param B
      * @return
      */
