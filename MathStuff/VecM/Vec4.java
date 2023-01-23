@@ -8,7 +8,12 @@ public class Vec4 {
     public float z;
     public float w;
     
-    public Vec4() {}
+    public Vec4() {
+        this.x = 1;
+        this.y = 1;
+        this.z = 1;
+        this.w = 1;
+    }
     
     public Vec4(float x, float y, float z, float w) {
         this.x = x;
@@ -16,6 +21,13 @@ public class Vec4 {
         this.z = z;
         this.w = w;
     }
+
+    public Vec4(Vec4 vec) {
+        this.x = vec.x;
+        this.y = vec.y;
+        this.z = vec.z;
+        this.w = vec.w;
+    } 
     
     public Vec4(Vec3 H) {
         this.x = H.x;
@@ -31,8 +43,7 @@ public class Vec4 {
         this.w = arr[3];
     }
     
-    private static Vec4 tmp  = new Vec4();
-    private Vec4 Buff = null;
+    private static Vec4 Buff = new Vec4();
     public void set(float x, float y, float z, float w){
         this.x = x;
         this.y = y;
@@ -45,6 +56,9 @@ public class Vec4 {
         this.z = vec.z;
         this.w = vec.w;
         return this;
+    }
+    public Vec4 clone() {
+        return new Vec4(this);
     }
     public float[] toArray() {
         float[] arr = new float[4];
@@ -72,7 +86,6 @@ public class Vec4 {
     }
 
     public Vec4 normalize() {
-        tmp = this;
         float pyth = (float)Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z + this.w*this.w);
         this.x /= pyth;
         this.y /= pyth;
@@ -89,20 +102,21 @@ public class Vec4 {
         return this;
     }
     public Vec4 mulBuff(float val) {
-        Buff = this;
+        Buff.set(this);
         Buff.x*=val;
         Buff.y*=val;
         Buff.z*=val;
         Buff.w*=val;
         return Buff;
     }
+   
     /**
      * Multiplys Matrix with a Vector 
      * @param B
      * @return
      */
     public Vec4 mul(Mat4 B) {
-        Buff = this;
+        Buff.set(this);
         this.x=B.m00*Buff.x+B.m01*Buff.y+B.m02*Buff.z+B.m03*Buff.w;
         this.y=B.m10*Buff.x+B.m11*Buff.y+B.m12*Buff.z+B.m13*Buff.w;
         this.z=B.m20*Buff.x+B.m21*Buff.y+B.m22*Buff.z+B.m23*Buff.w;
@@ -115,10 +129,13 @@ public class Vec4 {
     }
     
     public static void main(String[] args) {
-        Vec4 a = new Vec4(0, 0, 100, 0);
-        a.normalize();
-        a.showHor();
-        System.out.println(4f/5f);
+        Mat4 a = new Mat4(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 3, 2, 1, 0);
+        a.inverse();
+        a.show();
+        Vec4 k = new Vec4(0, 1, 0, 0);
+        // k.showHor();
+        k.mul(a);
+        k.showHor();
     }
     
 }
