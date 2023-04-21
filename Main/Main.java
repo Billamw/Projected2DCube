@@ -48,6 +48,7 @@ public class Main {
             Y = new Mat4(Mat3.rotationY(mouseAngleX));
             Z = new Mat4(Mat3.rotationZ(mouseAngleZ));
             V = Mat4.lookAt(eye, pos, up);
+            
 
             
             M = T.mul(X).mul(Y);
